@@ -55,11 +55,7 @@ class OutputLatihan extends StatelessWidget {
                 ),
                 ListTile(
                   title: Text('Payment : ${latihan.harga.value} '),
-                ),
-                ListTile(
-                  title: Text('Benefits : ${latihan.benefits.value} '),
-                ),
-                
+                )
               ],
             ),
           ),

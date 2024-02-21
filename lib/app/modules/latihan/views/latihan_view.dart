@@ -176,7 +176,7 @@ class Latihan extends StatelessWidget {
                         SizedBox(height: 16.0),
                         InkWell(
                           onTap: () =>
-                              latihanController.selectExpiredDate(context),
+                              latihanController.selectExpiredDate(),
                           child: InputDecorator(
                             decoration: InputDecoration(
                               hintText: 'Pilih Tanggal',
@@ -201,17 +201,6 @@ class Latihan extends StatelessWidget {
                   ],
                 ),
               ),
-              // SizedBox(height: 16.0),
-              // Obx(() {
-              //   if (latihanController.isFormSubmitted.value) {
-              //     return Text(
-              //       'Output: ${latihanController.fullname}, ${latihanController.placeofbirth}, ${latihanController.calculateAge()}, ${latihanController.gender}, ${latihanController.email}, ${latihanController.nationality}, ${latihanController.membership}, ${latihanController.cardnumber}, ${latihanController.expireddate}, ${latihanController.payment}',
-              //       style: TextStyle(fontSize: 16.0),
-              //     );
-              //   } else {
-              //     return SizedBox.shrink();
-              //   }
-              // }),
             ],
           ),
         ),

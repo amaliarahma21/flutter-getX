@@ -59,20 +59,20 @@ class LatihanController extends GetxController {
     return ''.obs;
   }
 
-  var selectedexpiredDate = ''.obs;
-  Future<void> selectexpiredDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
+  // var selectedexpiredDate = ''.obs;
+  // Future<void> selectexpiredDate(BuildContext context) async {
+  //   final DateTime? picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime(1900),
+  //     lastDate: DateTime.now(),
+  //   );
 
-    if (picked != null) {
-      final formattedDate = DateFormat('yyyy-MM-dd').format(picked);
-      selectedexpiredDate.value = formattedDate;
-    }
-  }
+  //   if (picked != null) {
+  //     final formattedDate = DateFormat('yyyy-MM-dd').format(picked);
+  //     selectedexpiredDate.value = formattedDate;
+  //   }
+  // }
 
   // void toggleType(String typeValue) {
   //   if (type.contains(typeValue)) {
@@ -99,20 +99,21 @@ class LatihanController extends GetxController {
     }
   }
 
-  Future<void> selectExpiredDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
+  var selectedexpiredDate = ''.obs;
+  Future<void> selectExpiredDate() async {
+  final DateTime now = DateTime.now();
+  final DateTime experieddate = now.add(Duration(days: 7)); 
 
-    if (picked != null) {
-      final experieddate = picked.add(Duration(days: 7));
-      final formattedDate = DateFormat('yyyy-MM-dd').format(experieddate);
-      expireddate.value = formattedDate;
-    }
-   }
+  final formattedDate = DateFormat('yyyy-MM-dd').format(experieddate);
+  expireddate.value = formattedDate;
+}
+
+  //   if (picked != null) {
+  //     final experieddate = picked.add(Duration(days: 7));
+  //     final formattedDate = DateFormat('yyyy-MM-dd').format(experieddate);
+  //     expireddate.value = formattedDate;
+  //   }
+  //  }
 
   void submitForm() {
     print(
