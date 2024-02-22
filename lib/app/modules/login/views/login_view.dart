@@ -47,7 +47,7 @@ class LoginView extends GetView<LoginController> {
                             TextFormField(
                               onChanged: controller.onUsernameChanged,
                               decoration: InputDecoration(
-                                hintText: "username",
+                                hintText: "Username",
                                 border: OutlineInputBorder(),
                               ),
                               validator: (value) {
@@ -81,7 +81,7 @@ class LoginView extends GetView<LoginController> {
                               child: ElevatedButton(
                                 style: ButtonStyle(
                                   backgroundColor:
-                                      MaterialStateProperty.all(Colors.red),
+                                      MaterialStateProperty.all(Colors.pinkAccent),
                                   shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
                                     RoundedRectangleBorder(

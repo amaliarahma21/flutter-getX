@@ -55,6 +55,13 @@ class HomeView extends GetView<HomeController> {
                 Get.toNamed('/login');
               },
               child: Text("Pindah ke halaman login"),
+            ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                Get.toNamed('/kategori');
+              },
+              child: Text("Pindah ke halaman kategori"),
             )
           ],
         ),

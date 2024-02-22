@@ -1,18 +1,26 @@
-// register_controller.dart
 import 'dart:convert';
-
-import 'package:learn_getx/app/providers/api.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../providers/api.dart';
+import 'package:http/http.dart' as http;
 
 class RegisterController extends GetxController {
-  var name = ''.obs;
+  //TODO: Implement RegisterController
+  final formKey = GlobalKey<FormState>();
+
+  var username = ''.obs;
+  var fullname = ''.obs;
   var email = ''.obs;
   var password = ''.obs;
 
-  void onNameChanged(String value) {
-    name.value = value;
+
+  void onUsernameChanged(String value) {
+    username.value = value;
+  }
+
+  void onFullnameChanged(String value) {
+    username.value = value;
   }
 
   void onEmailChanged(String value) {
@@ -28,46 +36,38 @@ class RegisterController extends GetxController {
       var response = await _performRegistration();
       var responseBody = json.decode(response.body);
 
-      if (response.statusCode == 200 && responseBody['token'] != null) {
-        _saveUserData(responseBody);
-        Get.offAllNamed(
-            '/bottom-menu'); // Navigate to the home page after registration
+      if (response.statusCode == 200) {
+        Get.snackbar('Success', 'Registration Successfully',
+            backgroundColor: Colors.green, colorText: Colors.white);
+        Get.offAllNamed('/login');
       } else {
-        // Registration failed, handle the error
         Get.snackbar(
-            'Error', 'Registration failed. ${responseBody['message']}');
+            'Error', 'Registartion failed. ${responseBody['message']}');
       }
     } catch (e) {
-      // Handle other errors
       print('Error during registration: $e');
-      Get.snackbar('Error', 'An error occurred during registration.');
+      Get.snackbar('Error', 'An error occurred during registration');
     }
   }
 
   Future<http.Response> _performRegistration() async {
-    var apiUrl = '/register';
+    var apiUrl = 'api/v1/auth/register';
     var requestBody = {
-      'name': name.value,
+      'username': username.value,
       'email': email.value,
       'password': password.value,
-      'role': 'member'
     };
 
-    return await http.post(
-      Uri.parse(Api.baseUrl + apiUrl),
-      body: jsonEncode(requestBody),
-      headers: {'Content-Type': 'application/json'},
-    );
-  }
-
-  void _saveUserData(Map<String, dynamic> responseBody) async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    localStorage.setString('token', responseBody['token']);
-    localStorage.setString('user', json.encode(responseBody['data']));
+    return await http.post(Uri.parse(Api.baseUrl + apiUrl),
+        body: jsonEncode(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+          "Access-Control-Allow-Origin": "*",
+          'Accept': '/'
+        });
   }
 
   void goToLogin() {
-    // Use Get.toNamed to navigate to the login page
     Get.toNamed('/login');
   }
 }
