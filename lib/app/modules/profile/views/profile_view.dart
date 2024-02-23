@@ -5,27 +5,41 @@ import 'package:get/get.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
-  const ProfileView({Key? key}) : super(key: key);
+  //  ProfileView({Key? key}) : super(key: key);
+
+   final ProfileController profileController = Get.put(ProfileController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('ProfileView'),
         centerTitle: true,
+        actions: [
+          IconButton(onPressed: () => controller.logout(), icon: Icon(Icons.logout))
+        ],
       ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Text(
-            //   'ProfileView is working',
-            //   style: TextStyle(fontSize: 20),
-            // ),
-            Text("Amalia Rahmadini"),
-            Text("amawl@gmail.com")
-          ],
-        ),
-      ),
-    );
+      body:  Obx(
+        () => controller.isLoggedIn.value
+           ? Center(child: CircularProgressIndicator())
+           : Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 8),
+                Text(
+                  'Nama: ${profileController.users['username']}',
+                  style: TextStyle(fontSize: 18),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  'Email: ${profileController.users['email']}',
+                  style: TextStyle(fontSize: 18),
+                ),
+                
+              ],
+            ),
+          ))
+  );
   }
 }

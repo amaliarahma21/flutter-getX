@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-// import 'package:learn_getx/app/modules/kategori/views/show_view.dart';
+import 'package:learn_getx/app/modules/kategori/views/show_view.dart';
 import 'package:learn_getx/app/routes/app_pages.dart';
 
 import '../../../data/kategori_model.dart';
@@ -19,7 +19,7 @@ class KategoriController extends GetxController {
 
   Future<void> fetchData() async {
     try {
-      var apiUrl = '${Api.baseUrl}/kategori';
+      var apiUrl = '${Api.baseUrl}/v1/kategori';
       var headers = await Api.getHeaders();
 
       var response = await http.get(
@@ -28,7 +28,7 @@ class KategoriController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        Iterable jsonResponse = json.decode(response.body)['data'];
+        Iterable jsonResponse = json.decode(response.body)['rows'];
         kategoriList
             .assignAll(jsonResponse.map((model) => Kategori.fromJson(model)));
       } else {
@@ -39,101 +39,101 @@ class KategoriController extends GetxController {
     }
   }
 
-  // //  fungsi create,
-  // Future<void> tambahKategori(
-  //   String nama,
-  // ) async {
-  //   try {
-  //     if (nama.isEmpty) {
-  //       Get.snackbar('Error', 'Semua field harus diisi');
-  //       return;
-  //     }
+  //  fungsi create,
+  Future<void> tambahKategori(
+    String nama,
+  ) async {
+    try {
+      if (nama.isEmpty) {
+        Get.snackbar('Error', 'Semua field harus diisi');
+        return;
+      }
 
-  //     var apiUrl = '${Api.baseUrl}/kategori';
-  //     var headers = await Api.getHeaders();
+      var apiUrl = '${Api.baseUrl}/v1/kategori';
+      var headers = await Api.getHeaders();
 
-  //     var response = await http.post(
-  //       Uri.parse(apiUrl),
-  //       headers: headers,
-  //       body: {
-  //         'nama': nama,
-  //       },
-  //     );
+      var response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: {
+          'nama': nama,
+        },
+      );
 
-  //     if (response.statusCode == 201) {
-  //       Get.snackbar('Sukses', 'Pasien berhasil ditambahkan');
-  //       fetchData();
-  //       Get.offAndToNamed(Routes.BOTTOM_MENU); // Redirect ke halaman pasien
-  //     } else {
-  //       throw Exception('Failed to add kategori');
-  //     }
-  //   } catch (e) {
-  //     print('Error during tambah kategori: $e');
-  //     if (e is http.Response) {
-  //       print('Response Body: ${e.body}');
-  //     }
-  //   }
-  // }
+      if (response.statusCode == 200) {
+        Get.snackbar('Sukses', 'Kategori berhasil ditambahkan');
+        fetchData();
+        Get.offAndToNamed(Routes.KATEGORI);
+      } else {
+        throw Exception('Failed to add Kategori');
+      }
+    } catch (e) {
+      print('Error during tambah Kategori: $e');
+      if (e is http.Response) {
+        print('Response Body: ${e.body}');
+      }
+    }
+  }
 
-  // // edit pasien
-  // Future<void> editKategori(
-  //   Kategori kategori,
-  //   String nama,
-  // ) async {
-  //   try {
-  //     if (nama.isEmpty) {
-  //       Get.snackbar('Error', 'Semua field harus diisi');
-  //       return;
-  //     }
+  // edit Kategori
+  Future<void> editKategori(
+    Kategori kategori,
+    String nama,
+  ) async {
+    try {
+      if (nama.isEmpty) {
+        Get.snackbar('Error', 'Semua field harus diisi');
+        return;
+      }
 
-  //     var apiUrl = '${Api.baseUrl}/pasien/${kategori.id}';
-  //     var headers = await Api.getHeaders();
+      var apiUrl = '${Api.baseUrl}/v1/kategori/${kategori.id}';
+      var headers = await Api.getHeaders();
 
-  //     var response = await http.put(
-  //       Uri.parse(apiUrl),
-  //       headers: headers,
-  //       body: {
-  //         'nama': nama,
-  //       },
-  //     );
+      var response = await http.put(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: {
+          'nama': nama,
+        },
+      );
 
-  //     if (response.statusCode == 200) {
-  //       Get.snackbar('Sukses', 'Kategori berhasil diubah');
-  //       fetchData(); // Refresh the pasienList
-  //       Get.offAndToNamed(Routes.BOTTOM_MENU);
-  //     } else {
-  //       throw Exception('Failed to edit kategori');
-  //     }
-  //   } catch (e) {
-  //     print('Error during edit kategori: $e');
-  //   }
-  // }
+      if (response.statusCode == 200) {
+        Get.snackbar('Sukses', 'Kategori berhasil diubah');
+        fetchData();
+        Get.offAndToNamed(Routes.KATEGORI);
+      } else {
+        throw Exception('Failed to edit Kategori');
+      }
+    } catch (e) {
+      print('Error during edit Kategori: $e');
+    }
+  }
 
-  // // show pasien
-  // void showPasienDetails(Kategori kategori) {
-  //   Get.to(() => DetailKategoriView(kategori: kategori));
-  // }
+  // show Kategori
+  void showKategoriDetails(Kategori kategori) {
+    Get.to(() => DetailKategoriView(kategori: kategori));
+  }
 
-  // // delete pasien
-  // Future<void> deleteKategori(Kategori kategori) async {
-  //   try {
-  //     var apiUrl = '${Api.baseUrl}/kategori/${kategori.id}';
-  //     var headers = await Api.getHeaders();
+  // delete Kategori
+  Future<void> deleteKategori(Kategori kategori) async {
+    try {
+      var apiUrl = '${Api.baseUrl}/v1/kategori/${kategori.id}';
+      var headers = await Api.getHeaders();
 
-  //     var response = await http.delete(
-  //       Uri.parse(apiUrl),
-  //       headers: headers,
-  //     );
+      var response = await http.delete(
+        Uri.parse(apiUrl),
+        headers: headers,
+      );
 
-  //     if (response.statusCode == 200) {
-  //       Get.snackbar('Sukses', 'Kategori berhasil dihapus');
-  //       fetchData();
-  //       // Optionally, you can navigate to a different page after deletion
-  //     } else {
-  //       throw Exception('Failed to delete kategori');
-  //     }
-  //   } catch (e) {
-  //     print('Error during delete kategori: $e');
-  //   }
-  // }
+      if (response.statusCode == 200) {
+        Get.snackbar('Sukses', 'Kategori berhasil dihapus');
+        fetchData();
+        // Optionally, you can navigate to a different page after deletion
+      } else {
+        throw Exception('Failed to delete Kategori');
+      }
+    } catch (e) {
+      print('Error during delete Kategori: $e');
+    }
+  }
 }

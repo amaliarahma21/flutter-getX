@@ -20,7 +20,7 @@ class RegisterController extends GetxController {
   }
 
   void onFullnameChanged(String value) {
-    username.value = value;
+    fullname.value = value;
   }
 
   void onEmailChanged(String value) {
@@ -51,9 +51,10 @@ class RegisterController extends GetxController {
   }
 
   Future<http.Response> _performRegistration() async {
-    var apiUrl = 'api/v1/auth/register';
+    var apiUrl = '/v1/auth/register';
     var requestBody = {
       'username': username.value,
+      'fullname' : fullname.value,
       'email': email.value,
       'password': password.value,
     };

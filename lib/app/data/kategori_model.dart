@@ -1,4 +1,3 @@
-// pasien_model.dart
 class Kategori {
   int id;
   String nama;

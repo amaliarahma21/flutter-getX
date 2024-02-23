@@ -1,4 +1,9 @@
 import 'package:get/get.dart';
+import 'package:learn_getx/app/modules/kategori/views/create_view.dart';
+import 'package:learn_getx/app/modules/kategori/views/edit_view.dart';
+import 'package:learn_getx/app/modules/kategori/views/show_view.dart';
+import 'package:learn_getx/app/modules/latihan/bindings/latihan_binding.dart';
+import 'package:learn_getx/app/modules/latihan/views/latihan_view.dart';
 
 import '../middlewares/auth_middleware.dart';
 import '../modules/biodata/bindings/biodata_binding.dart';
@@ -9,8 +14,6 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/kategori/bindings/kategori_binding.dart';
 import '../modules/kategori/views/kategori_view.dart';
-import '../modules/latihan/bindings/latihan_binding.dart';
-import '../modules/latihan/views/latihan_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
@@ -27,34 +30,28 @@ class AppPages {
 
   static final routes = [
     GetPage(
-        name: _Paths.HOME,
-        page: () => HomeView(),
-        binding: HomeBinding(),
-        middlewares: [AuthMiddleware()]),
+      name: _Paths.HOME,
+      page: () => HomeView(),
+      binding: HomeBinding(),
+      middlewares: [AuthMiddleware()],
+    ),
     GetPage(
       name: _Paths.PROFILE,
-      page: () => const ProfileView(),
+      page: () =>  ProfileView(),
       binding: ProfileBinding(),
+      middlewares: [AuthMiddleware()],
     ),
     GetPage(
       name: _Paths.COUNTER,
       page: () => CounterView(),
       binding: CounterBinding(),
-    ),
-    GetPage(
-      name: _Paths.BIODATA,
-      page: () => BiodataView(),
-      binding: BiodataBinding(),
+      middlewares: [AuthMiddleware()],
     ),
     GetPage(
       name: _Paths.LATIHAN,
       page: () => Latihan(),
       binding: LatihanBinding(),
-    ),
-    GetPage(
-      name: _Paths.REGISTER,
-      page: () => RegisterView(),
-      binding: RegisterBinding(),
+      middlewares: [AuthMiddleware()],
     ),
     GetPage(
       name: _Paths.LOGIN,
@@ -62,9 +59,28 @@ class AppPages {
       binding: LoginBinding(),
     ),
     GetPage(
+      name: _Paths.REGISTER,
+      page: () =>  RegisterView(),
+      binding: RegisterBinding(),
+    ),
+    GetPage(
       name: _Paths.KATEGORI,
-      page: () =>  KategoriView(),
+      page: () => const KategoriView(),
       binding: KategoriBinding(),
+      children: [
+        GetPage(
+          name: _Paths.CreateKategori,
+          page: () => CreateKategoriView(),
+        ),
+        GetPage(
+          name: _Paths.EditKategori,
+          page: () => EditKategoriView(kategori: Get.arguments),
+        ),
+        GetPage(
+          name: _Paths.DetailKategori,
+          page: () => DetailKategoriView(kategori: Get.arguments),
+        ),
+      ],
     ),
   ];
 }
